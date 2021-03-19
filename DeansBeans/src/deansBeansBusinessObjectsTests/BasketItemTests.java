@@ -85,7 +85,7 @@ class BasketItemTests
 
         BasketItem basketItem = new BasketItem(productID, productName, wholesalePrice, recommendedRetailPrice, quantity, formatID, degreeOfRoastID, description);
 
-        BigDecimal expected = new BigDecimal(24.90);
+        BigDecimal expected = new BigDecimal(2.49);
       
         expected = expected.setScale(2, RoundingMode.HALF_EVEN);
         
@@ -105,14 +105,43 @@ class BasketItemTests
         String productName = "Old Knobler";
         BigDecimal wholesalePrice = new BigDecimal(2.49);
         BigDecimal recommendedRetailPrice = new BigDecimal(11.49);
-        int quantity = 10;
+        int quantity = 0;
         int formatID = 5;
         int degreeOfRoastID = 2;
         String description = "Old Knobler is the original classic";
 
         BasketItem basketItem = new BasketItem(productID, productName, wholesalePrice, recommendedRetailPrice, quantity, formatID, degreeOfRoastID, description);
 
-        BigDecimal expected = new BigDecimal(24.90);
+        BigDecimal expected = new BigDecimal(2.49);
+      
+        expected = expected.setScale(2, RoundingMode.HALF_EVEN);
+        
+        BigDecimal actual = basketItem.getTotalValueOfBasketItem();
+        actual = actual.setScale(2, RoundingMode.HALF_EVEN);
+        
+        assertEquals(expected, actual);
+    }
+    
+    /// <summary>
+    ///A test for BasketItem Constructor where the quantity set is invalid as it is too high
+    ///</summary>
+    @Test
+    public void basketItemQuantityTooHighConstructorTest()
+    {
+        int productID = 1;
+        String productName = "Old Knobler";
+        BigDecimal wholesalePrice = new BigDecimal(2.49);
+        BigDecimal recommendedRetailPrice = new BigDecimal(11.49);
+        /// THE MAX VALUE ACCEPTABLE QUANTITY IS 100 MEANING THAT THE QUANTITY 999 IS INVALID
+        int quantity = 999;
+        int formatID = 5;
+        int degreeOfRoastID = 2;
+        String description = "Old Knobler is the original classic";
+
+        BasketItem basketItem = new BasketItem(productID, productName, wholesalePrice, recommendedRetailPrice, quantity, formatID, degreeOfRoastID, description);
+        /// THE QUANTITY SETTER WILL DEFAULT ANY QUANTITY GREATER THAN 100 TO 100
+        /// MEANING THAT THE EXPECTED VALUE SHOULD BE 100 * WHOLESALEPRICE(2.49)
+        BigDecimal expected = new BigDecimal(249.00);
       
         expected = expected.setScale(2, RoundingMode.HALF_EVEN);
         

@@ -1,0 +1,7 @@
+/.DS_Store
+/deansBeansBusinessObjects/
+/deansBeansBusinessObjectsTests/
+/deansBeansDataLayer/
+/deansBeansRepositoryTests/
+/deansBeansUI/
+/hibernate.cfg.xml
