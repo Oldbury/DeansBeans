@@ -62,7 +62,21 @@ public class BasketItem implements IBasketItem {
     }
 
     private void setQuantity(int quantity) {
-        this.quantity = quantity;
+    	// minimum order quantity should be 1
+    	// attempts to set quantity to less than will be set to 1
+    	if(quantity <= 0) {
+    		this.quantity = 1;
+    	}
+    	// the maximum quantity for a single basket item is 100
+    	// this prevents any accidental or malicious attempts to order an unachievable amount of items
+    	else if(quantity > 100) {
+    		this.quantity = 100;
+    	}
+    	// if the quantity is between 1 and 100 then set to the value
+    	else {
+    		this.quantity = quantity;
+    	}
+    	
     }
 
 	public int getFormatID() {
