@@ -51,6 +51,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.IntStream;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 import javax.swing.SpinnerNumberModel;
@@ -427,25 +428,97 @@ public class OrderBasketForm extends JFrame {
         orderBasket = new OrderBasket(customerForm.selectedCustomer);
         this.setTitle("Current Customer: " + customerForm.selectedCustomer.getCustomerName());
     }
-	
+   
+    
 	protected void do_btnAdd_actionPerformed(ActionEvent e) {
-	
 		int quantity;
 
 		Format selectedFormat = (Format) formatsList.get(cboFormat.getSelectedIndex());
 		DegreesOfRoast degreesOfRoast = (DegreesOfRoast) degreesOfRoastList.get(cboDegreesOfRoast.getSelectedIndex());
 		
+		List<IBasketItem> basketItemList = orderBasket.getBasketItems();
+		
+		ArrayList items = new ArrayList();
+		for (IBasketItem iBasketItem : basketItemList) {
+			items.add(iBasketItem.getProductName());
+//			System.out.println("items in basket: " + );
+		}
+		System.out.println("Basket items" + items);
+		
         if (ProductValidation.ValidateProductName(cboProduct.getSelectedItem().toString().trim())) //Is the product name valid?
         {
             Product product = (Product)cboProduct.getSelectedItem();
-            //Format format = (Format) formatList.get(cboFormat.getSelectedIndex());
+//            Format format = (Format) formatList.get(cboFormat.getSelectedIndex());
+                 
+            boolean productInBasket = basketItemList.stream().anyMatch(item -> item.getProductName().equals(cboProduct.getSelectedItem().toString()));
+            System.out.println("Product basket bool " + productInBasket);
+        
+            
+//            ArrayList<String> productNamesInBasket = new ArrayList<>(Arrays.asList(orderBasket.getBasketItems().indexOf(product)));
+            
             if (ProductValidation.ValidateQuantity((int)spnQuantity.getValue())) //Is the quantity within the boundaries?
             {
-                quantity = (int)spnQuantity.getValue();
-                IBasketItem basketItem = null;
-                basketItem = new BasketItem(product.getProductID(), product.getProductName(), product.getWholesalePrice(), product.getRecommendedRetailPrice(), quantity, selectedFormat.getFormatID(), degreesOfRoast.getDegreesOfRoastID(), product.getDescription());
-                orderBasket.addItem(basketItem);
-                basketItemsToListView();
+            	if (productInBasket){
+            		System.out.println(cboProduct.getSelectedItem() + " is already in the basket");
+//            		   int ss = orderBasket.getBasketItems().indexOf(1);
+//                       System.out.println("Index of selected product " + ss);
+            		
+            		// update the product quantity
+               		int selectedRowIndex = basketTable.getSelectedRow();
+                    
+                       for (IBasketItem iBasketItem : basketItemList) {
+                    	   
+                    	   if (iBasketItem.getProductName().equals(cboProduct.getSelectedItem().toString())) {
+//                    		   int currentItem = iBasketItem.getProductName().equals(cboProduct.getName());
+                    		   int index = orderBasket.getBasketItems().indexOf(iBasketItem);
+                               System.out.println("Index of selected product " + index);
+                               quantity = (int)spnQuantity.getValue();
+                               basketItemList.get(index).increaseQuantity(quantity);
+                               basketItemsToListView();
+                    		   
+                    	   }
+                    	   else {
+                    		   System.out.println("only updating quantity for selected item");
+                    	   }
+                    	   
+                    	   
+                    	   
+                    	 
+//                    	   if (iBasketItem.getProductName().equals(cboProduct.getName())) {
+//                    		   
+//                    		  int ind = basketItemList.indexOf(iBasketItem);
+//                    		  System.out.println("IND: " + ind);
+//                 			 quantity = (int)spnQuantity.getValue();
+//                 			 
+//                 			 int newQuantity = iBasketItem.getQuantity() + quantity;
+//
+//                          basketItem = new BasketItem(product.getProductID(), product.getProductName(), product.getWholesalePrice(), product.getRecommendedRetailPrice(), newQuantity, selectedFormat.getFormatID(), degreesOfRoast.getDegreesOfRoastID(), product.getDescription());
+//
+//                 			 
+//                 			 basketItemList.set(ind, iBasketItem);
+//        
+//                 			 iBasketItem.increaseQuantity(quantity);
+//                 			basketItemsToListView();
+//                 			
+//                 			System.out.println("Added product \n current basket: " + orderBasket.getBasketItems());
+//                    	   }
+//                    	   else {
+//                    		   System.out.println("not found in for loop");
+//                    	   }
+               			
+               		}
+            		
+        			
+        		} else {
+        			
+        			System.out.println("Product not currently in basket - adding");
+        			 quantity = (int)spnQuantity.getValue();
+                     IBasketItem basketItem = null;
+                     basketItem = new BasketItem(product.getProductID(), product.getProductName(), product.getWholesalePrice(), product.getRecommendedRetailPrice(), quantity, selectedFormat.getFormatID(), degreesOfRoast.getDegreesOfRoastID(), product.getDescription());
+                     orderBasket.addItem(basketItem);
+                     basketItemsToListView();
+        		}
+               
             }
             else
             { 
@@ -551,8 +624,8 @@ public class OrderBasketForm extends JFrame {
 	private void setAllTextFieldValues() {
 		selectedProduct = (Product) productList.get(cboProduct.getSelectedIndex());
 
-		txtRRP.setText("£" + (String.valueOf(selectedProduct.getRecommendedRetailPrice())));
-		txtWholesalePrice.setText("£" + (String.valueOf(selectedProduct.getWholesalePrice())));
+		txtRRP.setText("Â£" + (String.valueOf(selectedProduct.getRecommendedRetailPrice())));
+		txtWholesalePrice.setText("ï¿½" + (String.valueOf(selectedProduct.getWholesalePrice())));
 		txtDescription.setText(selectedProduct.getDescription());
 	}
 		
@@ -582,12 +655,12 @@ public class OrderBasketForm extends JFrame {
 				String[] data = new String[10]; // Specify number of columns.
 				data[0] = basketItemList.get(i).getProductID()+"";
 				data[1] = basketItemList.get(i).getProductName();
-				data[2] = "£ " + basketItemList.get(i).getWholesalePrice()+"";
-				data[3] = "£ " + basketItemList.get(i).getRecommendedRetailPrice()+"";
+				data[2] = "Â£ " + basketItemList.get(i).getWholesalePrice()+"";
+				data[3] = "Â£ " + basketItemList.get(i).getRecommendedRetailPrice()+"";
 				data[4] = basketItemList.get(i).getQuantity()+"";
 				data[5] = format.getFormatDescription()+"";
 				data[6] = degreesOfRoast.getRoastType()+"";
-				data[7] = "£ " + basketItemList.get(i).getTotalValueOfBasketItem().setScale(2, RoundingMode.HALF_EVEN)+"";
+				data[7] = "Â£ " + basketItemList.get(i).getTotalValueOfBasketItem().setScale(2, RoundingMode.HALF_EVEN)+"";
 				data[8] = basketItemList.get(i).getDescription();
                      
 				basketTableModel.addRow(data);
