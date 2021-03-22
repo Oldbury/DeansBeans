@@ -44,7 +44,18 @@ public class OrderBasket implements IOrderBasket {
     }
     
     public void addItem(IBasketItem basketItem){
-  		basketItems.add(basketItem);
+    	
+		List<IBasketItem> basketItemList = getBasketItems();
+		    	IBasketItem matchingProduct = findBasketItem(basketItem);
+    	
+		    	if (matchingProduct == null) {
+		    		basketItems.add(basketItem);
+		    	}
+		    	else {
+		    		int index = basketItems.indexOf(basketItem) + 1;
+		    		basketItems.get(index).increaseQuantity(basketItem.getQuantity());
+		    	}
+//		    	basketItems.add(basketItem);
     }
 
     public void removeItem(IBasketItem basketItem){
