@@ -367,7 +367,7 @@ class OrderBasketTests
 		  assertEquals(4, orderBasket.getNumberOfItems()); 
 	  }
 	  
-	  /* Test to check if adding 2 of the same products with the same formats 
+	  /* Test to check if adding 2 of the same products with the same formats only results in one basket item with an updated quantity
 	   * The reasoning behind this is that whilst still being the same coffee i.e. Lava Java, by changing the format they are different products
 	   * For example, Lava Java in Pod format is a different product to Lava Java in Ground Beans
 	   */
@@ -407,7 +407,8 @@ class OrderBasketTests
 		  assertEquals(4, orderBasket.getNumberOfItems()); 
 	  }
 	  
-	  /* Test to check if adding 2 of the same products with differing formats add as separate basket items
+	  /* Test to check if adding 2 sets of the same products with differing formats add as separate basket items and returns a third basket item for 
+	   * the product with a different formatiD
 	   * Test with 5 basket items
 	   * 2 x 2 identical products, 1x with different formatID
 	   * Expects the orderBasket to contain 3 products with a quantity of 5
