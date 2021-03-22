@@ -458,9 +458,7 @@ public class OrderBasketForm extends JFrame {
 						if (iBasketItem.getProductName().equals(cboProduct.getSelectedItem().toString()) && iBasketItem.getFormatID() == formatInput) {
 							index = orderBasket.getBasketItems().indexOf(iBasketItem);
 						}
-
 					}
-
 					if (basketItemList.get(index).getFormatID() == formatInput) {
 						quantity = (int)spnQuantity.getValue();
 						basketItemList.get(index).increaseQuantity(quantity);
@@ -473,7 +471,6 @@ public class OrderBasketForm extends JFrame {
 						orderBasket.addItem(basketItem);
 						basketItemsToListView();
 					}
-
 					// if product is not in basket add new basket item
 				} else {
 
@@ -484,7 +481,6 @@ public class OrderBasketForm extends JFrame {
 					orderBasket.addItem(basketItem);
 					basketItemsToListView();
 				}
-
 			}
 			else
 			{ 
