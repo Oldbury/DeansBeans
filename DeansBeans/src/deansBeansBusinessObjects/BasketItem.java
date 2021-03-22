@@ -92,7 +92,16 @@ public class BasketItem implements IBasketItem {
 	}
 
 	private void setDegreeOfRoastID(int degreeOfRoastID) {
-		this.degreeOfRoastID = degreeOfRoastID;
+		int format = getFormatID();
+		
+		if (format >= 6) {
+			this.degreeOfRoastID = 9;
+			
+		}
+		else {
+			this.degreeOfRoastID = degreeOfRoastID;
+		}
+		
 	}
 
     public String getDescription() {

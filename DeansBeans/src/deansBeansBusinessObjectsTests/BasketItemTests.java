@@ -177,6 +177,28 @@ class BasketItemTests
         assertEquals(expected, actual);
     }    
     
+    /// <summary>
+    ///A test for ground beans degree of roast
+    ///</summary>
+    @Test
+    public void degreeOfRoastGroundBeans()
+    {
+        int productID = 5;
+        String productName = "Justa Robusta";
+        BigDecimal wholesalePrice = new BigDecimal(1.60);
+        BigDecimal recommendedRetailPrice = new BigDecimal(11.00);
+        int quantity = 5;
+        int formatID = 1;
+        int degreeOfRoastID = 4;
+        String description = "Justa Robusta, the everyday coffee";
+
+        BasketItem basketItem = new BasketItem(productID, productName, wholesalePrice, recommendedRetailPrice, quantity, formatID, degreeOfRoastID, description);
+
+        int expected = 4;
+        int actual = basketItem.getDegreeOfRoastID();
+        
+        assertEquals(expected, actual);
+    }  
  
    
 }

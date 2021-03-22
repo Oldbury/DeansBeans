@@ -438,38 +438,23 @@ public class OrderBasketForm extends JFrame {
 		
 		List<IBasketItem> basketItemList = orderBasket.getBasketItems();
 		
-		ArrayList items = new ArrayList();
-		for (IBasketItem iBasketItem : basketItemList) {
-			items.add(iBasketItem.getProductName());
-//			System.out.println("items in basket: " + );
-		}
-		System.out.println("Basket items" + items);
-		
-        if (ProductValidation.ValidateProductName(cboProduct.getSelectedItem().toString().trim())) //Is the product name valid?
+		if (ProductValidation.ValidateProductName(cboProduct.getSelectedItem().toString().trim())) //Is the product name valid?
         {
             Product product = (Product)cboProduct.getSelectedItem();
-//            Format format = (Format) formatList.get(cboFormat.getSelectedIndex());
                  
             boolean productInBasket = basketItemList.stream().anyMatch(item -> item.getProductName().equals(cboProduct.getSelectedItem().toString()));
-            System.out.println("Product basket bool " + productInBasket);
-        
-            
-//            ArrayList<String> productNamesInBasket = new ArrayList<>(Arrays.asList(orderBasket.getBasketItems().indexOf(product)));
-            
+            System.out.println("Already in basket? " + productInBasket);
+                    
             if (ProductValidation.ValidateQuantity((int)spnQuantity.getValue())) //Is the quantity within the boundaries?
             {
+            	// check if the product is already in the basket
+            	// if true continue
             	if (productInBasket){
             		System.out.println(cboProduct.getSelectedItem() + " is already in the basket");
-//            		   int ss = orderBasket.getBasketItems().indexOf(1);
-//                       System.out.println("Index of selected product " + ss);
-            		
-            		// update the product quantity
-               		int selectedRowIndex = basketTable.getSelectedRow();
                     
                        for (IBasketItem iBasketItem : basketItemList) {
                     	   
                     	   if (iBasketItem.getProductName().equals(cboProduct.getSelectedItem().toString())) {
-//                    		   int currentItem = iBasketItem.getProductName().equals(cboProduct.getName());
                     		   int index = orderBasket.getBasketItems().indexOf(iBasketItem);
                                System.out.println("Index of selected product " + index);
                                quantity = (int)spnQuantity.getValue();
@@ -477,38 +462,14 @@ public class OrderBasketForm extends JFrame {
                                basketItemsToListView();
                     		   
                     	   }
+                    	    
                     	   else {
                     		   System.out.println("only updating quantity for selected item");
                     	   }
-                    	   
-                    	   
-                    	   
-                    	 
-//                    	   if (iBasketItem.getProductName().equals(cboProduct.getName())) {
-//                    		   
-//                    		  int ind = basketItemList.indexOf(iBasketItem);
-//                    		  System.out.println("IND: " + ind);
-//                 			 quantity = (int)spnQuantity.getValue();
-//                 			 
-//                 			 int newQuantity = iBasketItem.getQuantity() + quantity;
-//
-//                          basketItem = new BasketItem(product.getProductID(), product.getProductName(), product.getWholesalePrice(), product.getRecommendedRetailPrice(), newQuantity, selectedFormat.getFormatID(), degreesOfRoast.getDegreesOfRoastID(), product.getDescription());
-//
-//                 			 
-//                 			 basketItemList.set(ind, iBasketItem);
-//        
-//                 			 iBasketItem.increaseQuantity(quantity);
-//                 			basketItemsToListView();
-//                 			
-//                 			System.out.println("Added product \n current basket: " + orderBasket.getBasketItems());
-//                    	   }
-//                    	   else {
-//                    		   System.out.println("not found in for loop");
-//                    	   }
-               			
+              			
                		}
             		
-        			
+                    // if product is not in basket add new basket item
         		} else {
         			
         			System.out.println("Product not currently in basket - adding");
