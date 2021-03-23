@@ -3,6 +3,8 @@ package deansBeansBusinessObjects;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.HibernateException;
+
 import deansBeansDataLayer.DeansBeansDBMySQLEngine;
 import deansBeansDataLayer.SessionFactoryUtil;
 import deansBeansDataLayer.models.Format;
@@ -77,6 +79,16 @@ public class MySQLDeansBeansRepository implements IDeansBeansRepository
 
 	@Override
 	public int saveOrderToDatabase(IOrderBasket orderBasket, Customer customer) {
+		
+		try {
+			System.out.println("Attempting to create order and persist to DB");
+			engine.createOrder(orderBasket, customer);
+		}
+		catch(HibernateException hibernateEx) {
+			System.out.println("Failed to created order");
+			System.out.println(hibernateEx);
+		}
+		
 		long millis = System.currentTimeMillis(); // Gets system date and time
 	 	return -1;
 	}

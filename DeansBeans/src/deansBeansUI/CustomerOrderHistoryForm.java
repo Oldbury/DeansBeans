@@ -221,7 +221,7 @@ public class CustomerOrderHistoryForm extends JFrame {
 			data[0] = orders.get(i).getOrderID()+"";
 			data[1] = orders.get(i).getOrderDate()+"";
 			data[2] = orders.get(i).getOrderStatus()+"";
-			data[3] = "£ " + orders.get(i).getOrderTotal()+"";
+			data[3] = "ï¿½ " + orders.get(i).getOrderTotal()+"";
                  
 			orderTableModel.addRow(data);
 		}
@@ -240,17 +240,17 @@ public class CustomerOrderHistoryForm extends JFrame {
 		
 		for (int i = 0; i < orderItems.size(); i++) {
 			int formatID = orderItems.get(i).getFormatID();
-			int roastID = orderItems.get(i).getRoastID();
+//			int roastID = orderItems.get(i).getRoastID();
 			Format format = formats.stream().filter(f -> f.getFormatID() == formatID).findFirst().orElse(null);
-			DegreesOfRoast degreeOfRoast = degreesOfRoast.stream().filter(r -> r.getDegreesOfRoastID() == roastID).findFirst().orElse(null);
+//			DegreesOfRoast degreeOfRoast = degreesOfRoast.stream().filter(r -> r.getDegreesOfRoastID() == roastID).findFirst().orElse(null);
 			
 			String[] data = new String[6]; // Specify number of columns.
 			data[0] = orderItems.get(i).getOrder().getOrderID()+"";
 			data[1] = orderItems.get(i).getProduct().getProductID()+"";
 			data[2] = orderItems.get(i).getQuantity()+"";
-			data[3] = "£ " + orderItems.get(i).getPurchasePrice()+"";
+			data[3] = "ï¿½ " + orderItems.get(i).getPurchasePrice()+"";
 			data[4] = format.getFormatDescription()+"";
-			data[5] = degreeOfRoast.getRoastType()+"";
+//			data[5] = degreeOfRoast.getRoastType()+"";
                  
 			orderItemTableModel.addRow(data);
 		}

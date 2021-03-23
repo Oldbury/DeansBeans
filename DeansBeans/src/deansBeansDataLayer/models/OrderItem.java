@@ -28,8 +28,8 @@ public class OrderItem {
     @Column(name = "FormatID", nullable = false)
     private int formatID;
 
-    @Column(name = "RoastID", nullable = false)
-    private int roastID;
+//    @Column(name = "RoastID", nullable = false)
+//    private int roastID;
 
     public int getProductID() {
 		return productID;
@@ -50,7 +50,7 @@ public class OrderItem {
 		this.purchasePrice = purchasePrice;
 		this.quantity = quantity;
 		this.formatID = formatID;
-		this.roastID = roastID;
+//		this.roastID = roastID;
 	}
 	
     public int getOrderItemID() {
@@ -72,7 +72,7 @@ public class OrderItem {
     public int getQuantity() {
         return quantity;
     }
-    private void setQuantity(int quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -112,12 +112,12 @@ public class OrderItem {
 		this.formatID = formatID;
 	}
 
-	public int getRoastID() {
-		return roastID;
-	}
-
-	public void setRoastID(int roastID) {
-		this.roastID = roastID;
-	}
+//	public int getRoastID() {
+//		return roastID;
+//	}
+//
+//	public void setRoastID(int roastID) {
+//		this.roastID = roastID;
+//	}
 	
 }
