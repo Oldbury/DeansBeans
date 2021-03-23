@@ -119,6 +119,9 @@ public class OrderBasketForm extends JFrame {
 
 	private IOrderBasket orderBasket;
 	private IDeansBeansRepository deansBeansRepository;
+	
+	private JLabel lblDiscount;
+	private JTextField txtDiscount;
 
 	/**
 	 * Create the Order Placement frame.
@@ -587,7 +590,7 @@ public class OrderBasketForm extends JFrame {
 		selectedProduct = (Product) productList.get(cboProduct.getSelectedIndex());
 
 		txtRRP.setText("£" + (String.valueOf(selectedProduct.getRecommendedRetailPrice())));
-		txtWholesalePrice.setText("�" + (String.valueOf(selectedProduct.getWholesalePrice())));
+		txtWholesalePrice.setText("£" + (String.valueOf(selectedProduct.getWholesalePrice())));
 		txtDescription.setText(selectedProduct.getDescription());
 	}
 
