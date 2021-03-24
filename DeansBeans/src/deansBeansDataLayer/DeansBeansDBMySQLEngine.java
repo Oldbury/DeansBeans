@@ -170,60 +170,43 @@ public class DeansBeansDBMySQLEngine implements IDeansBeansDBEngine
 		Session session = null;
 		
 		try {
+			// open the hibernate session
 			session = SessionFactoryUtil.getSessionFactory().openSession();
 			session.beginTransaction();
-			
+			// get the items in the basket
 			orderBasket.getBasketItems();
 			System.out.println(orderBasket.getNumberOfProducts() + " number of products to checkout");
-			
-//			getOrderItemsForOrder();
-			
+			// create a new order and orderItem
 			Order order = new Order();
 			OrderItem ordItem = new OrderItem();
-			
-			
+			// create a new date for the order
 			java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-			
-			
+			// set the order date, total price and customerID
 			order.setOrderDate(date);
 			order.setOrderTotal(orderBasket.getBasketTotal());
 			order.setCustomerID(customer.getCustomerID());
 			
-//			ordItem.setOrderItemID((int) Math.random());
-//			ordItem.setProductID(orderBasket.get);
-//			ordItem.setPurchasePrice(basketItem.getWholesalePrice());
-//			ordItem.setFormatID(basketItem.getFormatID());
-//			ordItem.setRoastID(basketItem.getDegreeOfRoastID());
-//			
-//			order.addOrderItem(ordItem);
-			
-			
+			// for each item in the basket add a new order item and add to the order
 			for (IBasketItem basketItem : orderBasket.getBasketItems()) {
-				
 				ordItem.setOrderItemID((int) Math.random());
 				ordItem.setProductID(basketItem.getProductID());
 				ordItem.setPurchasePrice(basketItem.getWholesalePrice());
 				ordItem.setFormatID(basketItem.getFormatID());
 				ordItem.setQuantity(basketItem.getQuantity());
-//				ordItem.setRoastID(basketItem.getDegreeOfRoastID());
+				ordItem.setRoastID(basketItem.getDegreeOfRoastID());
 				ordItem.setOrder(order);
-				
 				order.addOrderItem(ordItem);
 			}
 			
 			System.out.println("Items in order: " + order.getOrderItems().size());
+			// saves to the database
 			session.save(order);
 			session.save(ordItem);
 			
-			
-			session.getTransaction().commit();
-
-			
 		} finally {
+			// commit the transaction and close the session
+			session.getTransaction().commit();
 			session.close();
 		}
-		
-		
-		
 	}
 }
