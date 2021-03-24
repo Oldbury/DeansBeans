@@ -37,7 +37,7 @@ public class MySQLDeansBeansRepositoryTests
 		List<Order> orders = repository.getOrdersForCustomer(2);
 		
 		//Assert
-		Assert.assertEquals(3, orders.size());
+		Assert.assertEquals(4, orders.size());
 		Assert.assertEquals(1, ((Order)((orders).get(2))).getOrderStatus());
 	}
 	
@@ -96,7 +96,7 @@ public class MySQLDeansBeansRepositoryTests
 		List<DegreesOfRoast> formats = repository.getDegreesOfRoast();
 		
 		//Assert
-		Assert.assertEquals(6, formats.size());
+		Assert.assertEquals(7, formats.size());
 		Assert.assertEquals("Burnt", formats.get(4).getRoastType());
 	}
 	

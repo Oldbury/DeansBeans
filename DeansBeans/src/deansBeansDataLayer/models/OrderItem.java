@@ -28,8 +28,8 @@ public class OrderItem {
     @Column(name = "FormatID", nullable = false)
     private int formatID;
 
-//    @Column(name = "RoastID", nullable = false)
-//    private int roastID;
+    @Column(name = "DegreeOfRoastID", nullable = false)
+    private int roastID;
 
     public int getProductID() {
 		return productID;
@@ -112,12 +112,11 @@ public class OrderItem {
 		this.formatID = formatID;
 	}
 
-//	public int getRoastID() {
-//		return roastID;
-//	}
-//
-//	public void setRoastID(int roastID) {
-//		this.roastID = roastID;
-//	}
+	public int getRoastID() {
+		return roastID;
+	}
+
+	public void setRoastID(int roastID) {		this.roastID = roastID;
+	}
 	
 }
